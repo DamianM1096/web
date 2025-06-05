@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acceso con Reconocimiento Facial e IA</title>
+  <style>
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #e6f0f3; 
+      color: #2c3e50; 
+      scroll-behavior: smooth;
+    }
+    header {
+      background: #2a9d8f; 
+      color: #f1faee; 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      user-select: none;
+    }
+    header .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      cursor: default;
+      outline-offset: 2px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.3rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      color: #f1faee;
+      text-decoration: none;
+      font-weight: 600;
+      outline-offset: 2px;
+    }
+    nav ul li a:hover, nav ul li a:focus {
+      text-decoration: underline;
+      outline: 2px solid #f1faee;
+      outline-offset: 3px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .hero {
+      background: #2a9d8f;
+      color: #e6f0f3;
+      padding: 3rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(42,157,143,0.3);
+      text-align: center;
+      user-select: none;
+    }
+    .hero h1 {
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .hero button {
+      background: #264653; 
+      color: #a7c7c5; 
+      border: none;
+      padding: 0.75rem 1.8rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .hero button:hover, .hero button:focus {
+      background: #1b2a34;
+      outline-offset: 2px;
+    }
+
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .feature-card {
+      background: #f1faee; 
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 18px rgba(42,157,143,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      cursor: default;
+    }
+    .feature-card:hover, .feature-card:focus {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(42,157,143,0.3);
+      outline: none;
+    }
+    .feature-card h3 {
+      color: #2a9d8f;
+      margin-bottom: 0.7rem;
+      font-weight: 700;
+    }
+    .feature-card p {
+      font-weight: 500;
+      font-size: 1rem;
+      color: #34495e;
+    }
+
+    
+    .video-demo {
+      margin-bottom: 3rem;
+    }
+    .video-demo h2 {
+      color: #2a9d8f;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    .video-demo iframe {
+      width: 100%;
+      height: 380px;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 8px 25px rgba(42,157,143,0.2);
+      user-select: none;
+    }
+    .video-selector {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+    .video-selector button {
+      background: #a7c7c5;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #264653;
+      transition: background-color 0.3s ease;
+      outline-offset: 2px;
+    }
+    .video-selector button.active, .video-selector button:hover, .video-selector button:focus {
+      background: #264653;
+      color: #a7c7c5;
+      outline: none;
+    }
+
+    
+    .blog-section {
+      margin-bottom: 3rem;
+    }
+    .blog-section h2 {
+      color: #2a9d8f;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      user-select: none;
+    }
+    .blog-posts {
+      display: grid;
+      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    }
+    .post-card {
+      background: #f1faee;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 18px rgba(42,157,143,0.15);
+      cursor: default;
+      user-select: none;
+      transition: box-shadow 0.3s ease;
+    }
+    .post-card:hover, .post-card:focus {
+      box-shadow: 0 12px 30px rgba(42,157,143,0.3);
+      outline: none;
+    }
+    .post-card h3 {
+      color: #2a9d8f;
+      margin-bottom: 0.7rem;
+    }
+    .post-card p {
+      color: #34495e;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    
+    .testimonials-section {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    .testimonials-section h2 {
+      color: #2a9d8f;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      user-select: none;
+    }
+    .testimonials-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .testimonial-video {
+      border-radius: 12px;
+      box-shadow: 0 5px 18px rgba(42,157,143,0.15);
+      user-select: none;
+      transition: box-shadow 0.3s ease;
+    }
+    .testimonial-video:hover, .testimonial-video:focus {
+      box-shadow: 0 12px 30px rgba(42,157,143,0.3);
+      outline: none;
+    }
+    .testimonial-video iframe {
+      border-radius: 12px;
+      width: 100%;
+      height: 300px;
+    }
+
+    /* Partners */
+    .partners {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      user-select: none;
+    }
+    .partner-logo {
+      height: 50px;
+      filter: grayscale(50%);
+      transition: filter 0.3s ease, transform 0.3s ease;
+      cursor: default;
+    }
+    .partner-logo:hover, .partner-logo:focus {
+      filter: grayscale(0);
+      transform: scale(1.1);
+      outline: none;
+    }
+
+   
+    .team-section {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .team-section h2 {
+      color: #2a9d8f;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      font-size: 2rem;
+      user-select: none;
+    }
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 2rem;
+      justify-items: center;
+    }
+    .team-member {
+      background: #f1faee;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 5px 18px rgba(42,157,143,0.15);
+      cursor: default;
+      user-select: none;
+      transition: box-shadow 0.3s ease;
+      outline-offset: 2px;
+    }
+    .team-member:hover, .team-member:focus {
+      box-shadow: 0 12px 30px rgba(42,157,143,0.3);
+      outline: none;
+    }
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      user-select: none;
+    }
+    .team-member h3 {
+      margin-bottom: 0.3rem;
+      color: #264653;
+    }
+    .team-member p {
+      font-weight: 600;
+      color: #2a9d8f;
+      margin-top: 0;
+      user-select: text;
+    }
+
+    footer {
+      background: #2a9d8f;
+      color: #f1faee;
+      text-align: center;
+      padding: 1.2rem 1rem;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Logo Proyecto Acceso con Reconocimiento Facial">Proyecto Reconocimiento Facial</div>
+    <nav aria-label="Menú principal">
+      <ul>
+        <li><a href="#features" tabindex="0">Funciones</a></li>
+        <li><a href="#videos" tabindex="0">Videos</a></li>
+        <li><a href="#testimonials" tabindex="0">Entrevistas</a></li>
+        <li><a href="#team" tabindex="0">Equipo</a></li>
+        <li><a href="https://trello.com/invite/b/682e6fed5c5bf8518aab3b25/ATTI6bf388d1e12eb08b91490461e8bfe776543817FA/sistema-de-control-de-acceso-mediante-reconocimiento-facial">Trello</a></li>
+        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfBqx5HLTUj9DvyTcBnwTgDUp-ECJf8-eiv2fk9-OVVki70aw/viewform">Encuesta</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" role="banner" aria-label="Introducción al proyecto">
+      <h1 tabindex="0">Acceso Seguro con Reconocimiento Facial </h1>
+      <p tabindex="0">Una solución innovadora para controlar el acceso de usuarios de una manera facil y sencilla.</p>
+     
+<button tabindex="0" aria-label="Comenzar"><a href="tesis.docx" class="btn btn-primary" download style="color: white;" tabindex="0" aria-label="Comenzar">
+  Descargar Tesis
+</a></button>
+      
+
+    </section>
+
+    <section id="features" class="features" aria-label="Características del sistema">
+      <article class="feature-card" tabindex="0">
+        <h3>Reconocimiento Facial Preciso</h3>
+        <p>Empleamos códigos inteligentes para el análisis y reconocimiento de características faciales.</p>
+      </article>
+      <article class="feature-card" tabindex="0">
+        <h3>Acceso Rápido y Seguro</h3>
+        <p>Control de acceso inmediato sin necesidad de llaves o tarjetas.</p>
+      </article>
+      <article class="feature-card" tabindex="0">
+        <h3>Fácil Integración</h3>
+        <p>Compatible con sistemas existentes y fácil de instalar.</p>
+      </article>
+    </section>
+
+    <section id="videos" class="video-demo" aria-label="Demostraciones en video">
+      <h2 tabindex="0">Videos del proyecto</h2>
+      <iframe id="videoFrame" src="https://www.youtube.com/embed/1QyAXvRkNkQ" title="Video 1" allowfullscreen></iframe>
+      <div class="video-selector" role="list" aria-label="Selector de videos demostrativos">
+        <button class="active" onclick="changeVideo('1QyAXvRkNkQ')" tabindex="0" aria-pressed="true">circuito</button>
+        <button onclick="changeVideo('3N2qvQ_yX4E')" tabindex="0" aria-pressed="false">programacion </button>
+        <button onclick="changeVideo('h4ILMMQzyzg')" tabindex="0" aria-pressed="false">implementación</button>
+      </div>
+    </section>
+
+    <section id="blog" class="blog-section" aria-label="Artículos del blog">
+      <h2 tabindex="0">Últimos Artículos</h2>
+      <div class="blog-posts">
+        <article class="post-card" tabindex="0">
+          <h3><a href="http://www.scielo.org.co/scielo.php?pid=S1794-31082024000300027&script=sci_arttext">Integración de IA en Sistemas de Seguridad</a></h3>
+          <p>Cómo la inteligencia artificial está revolucionando el control de acceso.</p>
+        </article>
+        <article class="post-card" tabindex="0">
+          <h3><a href="https://revista.redipe.org/index.php/1/article/view/267"> Tecnologías de Reconocimiento Facial</a></h3>
+          <p>Una revisión de los métodos actuales y sus aplicaciones prácticas.</p>
+        </article>
+        <article class="post-card" tabindex="0">
+          <h3><a href="https://www.dspace.espol.edu.ec/handle/123456789/50333">Beneficios del Acceso Sin Contacto</a> </h3>
+          <p>Mejorando la seguridad y comodidad en el entorno laboral.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section" aria-label="Testimonios de usuarios">
+      <h2 tabindex="0">Entrevistas</h2>
+      <div class="testimonials-container">
+        <div class="testimonial-video" tabindex="0">
+          <iframe src="https://www.youtube.com/embed/8MZPQEjYY7g?autoplay=0&mute=1" title="Testimonio 1" allowfullscreen></iframe>
+        </div>
+        <div class="testimonial-video" tabindex="0">
+          <iframe src="https://www.youtube.com/embed/ZczxoZ0QHxw?autoplay=0&mute=1" title="Testimonio 2" allowfullscreen></iframe>
+        </div>
+        <div class="testimonial-video" tabindex="0">
+          <iframe src="https://www.youtube.com/embed/qT2yKKx-4KE?autoplay=0&mute=1" title="Testimonio 3" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="team-section" aria-label="Integrantes del grupo de trabajo">
+      <h2 tabindex="0">Nuestro Equipo</h2>
+      <div class="team-container">
+        <article class="team-member" tabindex="0">
+          <img src="damian.jpeg" alt="Foto de Damian Marin" loading="lazy" />
+          <h3>Damian Marin </h3>
+          <p></p>
+        </article>
+        <article class="team-member" tabindex="0">
+          <img src="" alt="Foto de Oliver Veliz" loading="lazy" />
+          <h3>Oliver Veliz</h3>
+          <p></p>
+        </article>
+        <article class="team-member" tabindex="0">
+          <img src="" alt="Foto de Miguel Maza" loading="lazy" />
+          <h3>Miguel Maza</h3>
+          <p></p>
+        </article>
+        <article class="team-member" tabindex="0">
+          <img src="" alt="Foto de Cristopher Guaman" loading="lazy" />
+          <h3>Cristopher Guaman</h3>
+          <p></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    
+  </footer>
+
+  <script>
+    function changeVideo(videoId) {
+      const iframe = document.getElementById('videoFrame');
+      iframe.src = `https://www.youtube.com/embed/${videoId}`;
+
+      
+      const buttons = document.querySelectorAll('.video-selector button');
+      buttons.forEach(button => {
+        if (button.onclick.toString().includes(videoId)) {
+          button.classList.add('active');
+          button.setAttribute('aria-pressed', 'true');
+        } else {
+          button.classList.remove('active');
+          button.setAttribute('aria-pressed', 'false');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
